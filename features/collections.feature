@@ -10,6 +10,14 @@ Scenario: Criar uma lista com sucesso
     Then eu devo ver a mensagem de confirmação “Lista criada com sucesso!”.
     And a lista “Filmes para as férias” deve estar visível na minha coleção de listas.
 
+Scenario: Excluir uma lista personalizada com sucesso
+    Given eu estou na página “Listas”.
+    And eu visualizo a lista “Filmes para as férias” na minha coleção.
+    When eu seleciono a opção de excluir a lista “Filmes para as férias”.
+    And confirmo a exclusão no alerta do sistema.
+    Then eu devo ver a mensagem de confirmação “Lista removida com sucesso!”.
+    And a lista “Filmes para as férias” não deve mais estar visível na minha coleção de listas.
+
 Scenario: Adicionar um filme a uma lista com sucesso
     Given eu estou na página do filme “Interstellar”.
     And eu possuo a lista “Filmes para as férias” criada.
