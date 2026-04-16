@@ -47,3 +47,9 @@ Scenario: Login com perfil não cadastrado
     And eu preencho senha com "lukinhas#123"
     And eu seleciono "Login"
     Then eu recebo a mensagem "Conta não cadastrada. Impossível fazer login"
+Scenario: Remoção de usuário
+    Given eu estou logado como "llucasEmanuel"
+    And eu estou na tela "Meu perfil"
+    When eu seleciono "Remover conta"
+    And eu confirmo a escolha com "Confirmo que quero remover a conta"
+    Then o sistema deve mostrar a mensagem "Conta removida com sucesso"
