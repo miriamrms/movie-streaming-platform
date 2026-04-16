@@ -37,5 +37,6 @@ Scenario: Impedir a criação de listas com nomes duplicados
     Given eu estou na página “Listas”.
     And eu já possuo uma lista chamada “Filmes para as férias”.
     When eu tento criar uma nova lista com o nome “Filmes para as férias”.
-    Then eu devo ver a mensagem de erro “Você já possui uma lista com este nome”.
-    And uma nova lista não deve ser criada na minha coleção.
+    Then eu devo ver o alerta de erro “Você já possui uma lista com este nome”.
+    And o formulário de criação deve permanecer aberto com o nome preenchido.
+    And o número total de listas na minha coleção não deve aumentar.
