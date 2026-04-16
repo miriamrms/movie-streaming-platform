@@ -40,3 +40,11 @@ Scenario: Impedir a criação de listas com nomes duplicados
     Then eu devo ver o alerta de erro “Você já possui uma lista com este nome”.
     And o formulário de criação deve permanecer aberto com o nome preenchido.
     And o número total de listas na minha coleção não deve aumentar.
+    Then eu devo ver a mensagem de erro “Você já possui uma lista com este nome”.
+    And uma nova lista não deve ser criada na minha coleção.
+
+Scenario: Impedir a criação de uma lista com nome vazio
+    Given eu estou na página “Listas”.
+    When eu tento criar uma nova lista sem informar um nome.
+    Then eu devo ver a mensagem de erro “O nome da lista é obrigatório”.
+    And nenhuma lista deve ser criada na minha coleção.
