@@ -24,7 +24,7 @@ Scenario: Erro ao criar uma nova conta
 
 Scenario: Atualização da conta
     Given eu estou logado como "abobrinha" e acesso a tela "Editar perfil"
-    When eu altero o meu "Nickname" para "REPOLHOROXO"
+    When eu altero o meu "Nickname" para "pepino"
     And faço o upload de uma nova imagem para o "Banner" e para a "Foto de perfil" 
     And escrevo na descrição: "o maior fã de filmes do adam sandler" 
     And seleciono em "Salvar alterações" 
