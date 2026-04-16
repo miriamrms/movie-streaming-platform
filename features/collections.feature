@@ -43,8 +43,12 @@ Scenario: Impedir a criação de listas com nomes duplicados
     Then eu devo ver a mensagem de erro “Você já possui uma lista com este nome”.
     And uma nova lista não deve ser criada na minha coleção.
 
-Scenario: Impedir a criação de uma lista com nome vazio
-    Given eu estou na página “Listas”.
-    When eu tento criar uma nova lista sem informar um nome.
-    Then eu devo ver a mensagem de erro “O nome da lista é obrigatório”.
-    And nenhuma lista deve ser criada na minha coleção.
+Scenario: Impedir a criação de lista com nome vazio ou apenas espaços
+    Given eu estou na página "Listas"
+    And o campo de criação de nova lista está visível
+    When eu tento criar uma nova lista com o nome "" (vazio)
+    And eu envio o formulário de criação
+    Then eu devo ver a mensagem de erro "O nome da lista é obrigatório"
+    And o botão de criar deve permanecer desabilitado ou o formulário não deve ser submetido
+    And nenhuma nova lista deve ser adicionada à minha coleção
+    And o campo de nome deve receber foco para correção
