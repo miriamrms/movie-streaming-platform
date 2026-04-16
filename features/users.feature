@@ -17,7 +17,7 @@ Scenario: Erro ao criar uma nova conta
     Given eu estou na tela "Página inicial"
     When eu seleciono "Cadastrar nova conta"
     And Preencho username com "llucasEmanuel"
-    And Preencho senha com "123"
+    And Preencho senha com "321"
     And Preencho email com "lluukkaass62@gmail.com"
     And Seleciono "Cadastrar"
     Then Eu devo ver uma mensagem de erro "Erro ao criar conta: Senha deve ter no mínimo 8 dígitos"
