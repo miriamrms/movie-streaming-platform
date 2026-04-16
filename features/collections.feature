@@ -23,5 +23,6 @@ Scenario: Remover um filme de uma lista com sucesso
     When eu removo o filme “Interstellar” desta lista.
     Then eu devo ver a mensagem de confirmação “Filme removido com sucesso!”.
     And o filme “Interstellar” não deve mais constar na lista “Filmes para as férias”.
+    And a lista “Filmes para as férias” deve continuar disponível para visualização.
 
 
