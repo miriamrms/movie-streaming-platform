@@ -52,3 +52,11 @@ Scenario: Impedir a criação de lista com nome vazio ou apenas espaços
     And o botão de criar deve permanecer desabilitado ou o formulário não deve ser submetido
     And nenhuma nova lista deve ser adicionada à minha coleção
     And o campo de nome deve receber foco para correção
+
+Scenario: Renomear uma lista com sucesso
+    Given eu estou na página de edição da lista "Séries para o fim de semana".
+    And existe uma lista chamada "Séries para o fim de semana" na minha coleção.
+    When eu altero o nome para "Maratona de séries" e salvo as alterações.
+    Then eu devo ver a mensagem de confirmação "Lista atualizada com sucesso!".
+    And a lista deve ser exibida com o novo nome "Maratona de séries" na minha coleção.
+    And o nome antigo "Séries para o fim de semana" não deve mais estar presente.
