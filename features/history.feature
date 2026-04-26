@@ -107,7 +107,7 @@ When o usuário seleciona o filme "E o Vento Levou" na seção "Assistidos Recen
 Then a reprodução do filme "E o Vento Levou" deve iniciar a partir de "40%"
 And o progresso assistido deve continuar sendo atualizado durante a reprodução
 
-Scenario: Sincronização de Progresso
+Scenario: Atualização de Progresso
 Given que o usuário está logado em dois dispositivos
 And a última ocorrência do filme "E o Vento Levou" no histórico é de "40%"
 When o usuário assiste ao filme "E o Vento Levou" até "60%"
