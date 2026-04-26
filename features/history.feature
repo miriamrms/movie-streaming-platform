@@ -17,6 +17,17 @@ And e deve ver o progresso "40%" associado ao filme "Interstellar"
 And e deve ver a data "20/04/2026" associada ao filme "Matrix"
 And e deve ver o progresso "100%" associado ao filme "Matrix"
 
+Scenario: Registrar múltiplas visualizações do mesmo filme
+Given que o usuário está logado
+And assistiu ao filme "Matrix" no dia "25/04/2026"
+And o progresso assistido do filme "Matrix" é "100%"
+And assistiu ao filme "Matrix" no dia "26/04/2026"
+And o progresso assistido do filme "Matrix" é "50%"
+When o usuário acessa a página "Meu Histórico"
+Then o usuário vê o filme "Matrix" duas vezes no histórico
+And deve ver a data "26/04/2026" e o progresso "50%" associados a um registro do filme "Matrix"
+And deve ver a data "25/04/2026" e o progresso "100%" associados a um registro do filme "Matrix"
+
 Scenario: Adicionar novo filme ao histórico
 Given que o usuário está logado
 And já possui os filmes "Matrix" e "Interstellar" no seu histórico de filmes assistidos
