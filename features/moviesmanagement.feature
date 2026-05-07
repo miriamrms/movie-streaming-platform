@@ -4,48 +4,53 @@ Feature: Gerenciamento de Filmes no Catálogo
   So that os usuários tenham conteúdo atualizado para assistir
 
   Scenario: Cadastro de um novo filme com sucesso
-    Given que eu estou autenticado como administrador
-    And eu estou na página de catálogo de filmes
+    Given eu acesso o sistema como "administrador"
+    And eu estou na página "Adicionar novo filme"
     When eu adiciono o filme "O Auto da Compadecida" com sinopse "A saga de João Grilo" e duração "104 minutos"
-    Then eu vejo o filme "O Auto da Compadecida" no catálogo
-    And eu vejo que este filme possui a sinopse "A saga de João Grilo"
+    Then eu vejo o filme "O Auto da Compadecida" no "Catálogo de Filmes"
+    And eu vejo que o filme "O Auto da Compadecida" possui a sinopse "A saga de João Grilo" e possui duração de "104 minutos"
 
  Scenario: Tentativa de cadastro sem campos obrigatórios
-    Given que eu estou autenticado como administrador
-    And eu estou na página de adicionar novo filme
-    When eu tento adicionar um filme deixando o título em branco e com sinopse "Um filme qualquer"
+    Given eu acesso o sistema como "administrador"
+    And eu estou na página "Adicionar novo filme"
+    When eu tento adicionar um filme deixando o título "" e com sinopse "Um filme qualquer"
     Then eu vejo a mensagem de erro "O título é obrigatório"
-    And eu continuo na página de adicionar novo filme
+    And eu continuo na página "Adicionar novo filme"
 
  Scenario: Edição de metadados de um filme já existente
     Given que o sistema possui o filme "O Auto da Compadecida" com sinopse "Sinopse antiga"
-    And eu estou autenticado como administrador
-    And eu estou na página de edição do filme "O Auto da Compadecida"
+    And eu acesso o sistema como "administrador"
+    And eu estou na página de "edição" do filme "O Auto da Compadecida"
     When eu altero a sinopse para "A saga de João Grilo e Chicó"
-    And eu confirmo a alteração
-    Then eu vejo a sinopse "A saga de João Grilo e Chicó" nos detalhes do filme
+    Then eu vejo a sinopse "A saga de João Grilo e Chicó" nos "detalhes" do filme "O Auto da Compadecida"
 
  Scenario: Remoção de um filme do catálogo
     Given que o sistema possui os filmes "Shrek" e "Toy Story" no catálogo
-    And eu estou autenticado como administrador
-    And eu estou na página de catálogo de filmes
+    And eu acesso o sistema como "administrador"
+    And eu estou na página de "Catálogo de Filmes"
     When eu removo o filme "Shrek"
-    Then eu não vejo o filme "Shrek" na listagem do catálogo
-    And eu continuo vendo o filme "Toy Story" na listagem do catálogo
+    Then eu não vejo o filme "Shrek" no "Catálogo de Filmes"
+    And eu continuo vendo o filme "Toy Story" no "Catálogo de Filmes"
 
  Scenario: Tentativa de cadastrar um filme que já existe no catálogo
     Given que o sistema já possui o filme "O Senhor dos Anéis"
-    And eu estou autenticado como administrador
-    And eu estou na página de adicionar novo filme
+    And eu acesso o sistema como "administrador"
+    And eu estou na página "Adicionar novo filme"
     When eu tento adicionar o filme "O Senhor dos Anéis" com sinopse "A jornada do anel" e duração "178 minutos"
     Then eu vejo a mensagem de erro "Este filme já está cadastrado no catálogo"
     And o sistema não cria uma cópia duplicada do filme "O Senhor dos Anéis"
 
  Scenario: Tentativa de remover o título na edição de um filme
-    Given que o sistema possui o filme "Gladiador" com o título "Gladiador" e sinopse "Filme épico"
-    And eu estou autenticado como administrador
-    And eu estou na página de edição do filme "Gladiador"
-    When eu altero o título para em branco
-    And eu confirmo a alteração
+    Given que o sistema possui o filme "Gladiador" com sinopse "Filme épico"
+    And eu acesso o sistema como "administrador"
+    And eu estou na página de "edição" do filme "Gladiador"
+    When eu altero o título para ""
     Then eu vejo a mensagem de erro "O título é obrigatório"
-    And eu vejo que o título do filme continua sendo "Gladiador" no catálogo
+    And eu vejo que o título do filme continua sendo "Gladiador" no "Catálogo de Filmes"
+
+ Scenario: Tentativa de gerenciamento por usuário não autorizado
+    Given que acesso o sistema como "usuário"
+    And eu estou na página "Página Inicial"
+    When eu tento acessar a página "Adicionar novo filme"
+    Then eu vejo a mensagem de erro "Acesso negado. Privilégios de administrador necessários."
+    And eu continuo na página "Página Inicial"
