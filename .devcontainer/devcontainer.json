@@ -1,0 +1,25 @@
+{
+  "name": "CInema - ESS Project",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "app", // Indica qual serviço será o ambiente de dev
+  "workspaceFolder": "/workspaces/movie_streaming_platform",
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "firsttris.vscode-jest-runner",
+        "ms-azuretools.vscode-docker",
+        "ckotzb.postgresql-client" // Sugestão: extensão para explorar o banco
+      ],
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      }
+    }
+  },
+
+  "forwardPorts": [3000, 5432],
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y postgresql-client && cd backend && npm install",
+  "remoteUser": "node"
+}
