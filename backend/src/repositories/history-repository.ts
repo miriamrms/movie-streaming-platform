@@ -70,6 +70,10 @@ class HistoryRepository {
             }
         });
     }
+
+    async getMovies(){
+        return await prisma.movie.findMany();
+    }
 }
 
 export default new HistoryRepository();

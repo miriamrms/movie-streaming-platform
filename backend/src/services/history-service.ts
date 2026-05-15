@@ -37,9 +37,12 @@ class HistoryService {
      const history = await historyRepository.getUserHistory(id_user);
      return history.map(record => {
        const percentage = Math.round((record.last_position / record.duration) * 100);
+
+       const justTheDate = record.watched_at.toISOString().split('T')[0];
        
        return {
          ...record,
+         watched_at: justTheDate,
          percentage_watched: `${percentage}%` 
        };
      });
