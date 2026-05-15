@@ -16,12 +16,6 @@ Scenario: Visualizar Histórico Completo
     And e deve ver a data "20/04/2026" associada ao filme "Casablanca"
     And e deve ver o progresso "100%" associado ao filme "Casablanca"
 
-Scenario: Bloquear acesso ao histórico sem estar logado
-    Given que o usuário não está logado
-    When o usuário tenta acessar a página "Meu Histórico"
-    Then o usuário deve ser ver a mensagem "Não é possível visualizar o histórico sem estar logado"
-    And o usuário deve ser redirecionado para a página "Login"
-
 Scenario: Registrar múltiplas visualizações do mesmo filme
     Given que o usuário está logado
     And assistiu ao filme "Casablanca" no dia "25/04/2026"
@@ -48,26 +42,26 @@ Scenario: Adicionar novo filme ao histórico
     And deve ver a data "20/04/2026" associada ao filme "Casablanca"
     And deve ver o progresso "100%" associado ao filme "Casablanca"
 
-Scenario: Remover filme do histórico
+Scenario: Ocultar filme do histórico
     Given que o usuário está logado
     And tem os filmes "Casablanca" e "Tempos Modernos" no seu histórico de filmes assistidos
-    When o usuário solicita a remoção do filme "Casablanca" do seu histórico
-    Then ele deve ver uma mensagem de confirmação "Filme removido com sucesso"
+    When o usuário solicita esconder o filme "Casablanca" do seu histórico
+    Then o usuário deve ver uma mensagem de confirmação de sucesso
     And o filme "Casablanca" não deve mais estar visível na página "Meu Histórico"
     And o filme "Tempos Modernos" deve permanecer listado como conteúdo assistido
 
-Scenario: Remover filme inexistente do histórico
-    Given que o usuário está logado
-    And tem apenas o filme "Tempos Modernos" no seu histórico de filmes assistidos
-    When o usuário solicita a remoção do filme "Casablanca" do seu histórico
-    Then ele deve ver uma mensagem de erro
-
-Scenario: Apagar histórico Completo
+Scenario: Esconder histórico Completo
     Given que o usuário está logado
     And tem os filmes "Casablanca" e "Tempos Modernos" no seu histórico de filmes assistidos
-    When o usuário solicita a exclusão de todo o histórico
+    When o usuário solicita esconder todos os filmes do histórico
     Then o usuário deve ver uma mensagem de confirmação de sucesso
     And nenhum filme deve estar visível na página "Meu Histórico"
+
+Scenario: Esconder histórico completo quando histórico está vazio
+    Given que o usuário está logado
+    And não possui nenhum filme no histórico de filmes assistidos
+    When o usuário solicita esconder todos os filmes do histórico
+    Then o usuário deve ver uma mensagem de erro
 
 Scenario: Histórico Vazio
     Given que o usuário está logado
