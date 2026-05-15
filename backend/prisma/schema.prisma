@@ -17,7 +17,8 @@ model Movie {
   duration  String?
   director  String?
   cast      String?
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+  histories History[]
 }
 
 model History {
@@ -28,6 +29,8 @@ model History {
   last_position Int      @default(0)
   is_completed  Boolean  @default(false)
   is_hidden     Boolean  @default(false)
+
+  movie Movie @relation(fields: [id_movie], references: [id])
 
   @@id([id_user, id_movie, watched_at])
 }

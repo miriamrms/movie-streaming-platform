@@ -52,12 +52,12 @@ const database: HistoryModel[] = [
 
 async function main() {
   console.log("Iniciando o teste...");
-  /*
+  
   for (const record of database) {
-    const novoHistorico = await historyRepository.create(record);
+    const novoHistorico = await historyRepository.upsert(record);
     console.log(`Histórico criado/atualizado: User ${novoHistorico.id_user} | Filme ${novoHistorico.id_movie}`);
   }
-  */
+  
   try {
     const user1History = await historyRepository.getUserHistory("1");
     console.log("Histórico do user 1:", JSON.stringify(user1History, null, 2));

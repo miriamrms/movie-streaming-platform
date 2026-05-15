@@ -4,11 +4,8 @@ import { HistoryModel } from '../models/history-model';
 class HistoryService {
 
   async processVideoProgress(id_user: string, id_movie: string, duration: number, last_position: number) {
-    
     const percentageWatched = (last_position / duration) * 100;
-    
     const is_completed = percentageWatched >= 95; 
-
     const today = new Date().toISOString().split('T')[0];
 
     const historyData: HistoryModel = {
@@ -24,18 +21,29 @@ class HistoryService {
   }
 
   async hideAllFromHistory(id_user: string) {
-    historyRepository.hideAllFromHistory(id_user);
+    const currentHistory = await historyRepository.getUserHistory(id_user);
+    if (currentHistory.length === 0) {
+      throw new Error("Seu histórico já está vazio."); 
+    }
+    await historyRepository.hideAllFromHistory(id_user);
   }
 
   async hideMovie(id_user: string, id_movie: string, watched_at: Date) {
-    historyRepository.hideFromHistory(id_user, id_movie, watched_at);
+    await historyRepository.hideFromHistory(id_user, id_movie, watched_at);
   }
 
   async showUserHistory(id_user: string) {
-     const history = await historyRepository.getUserHistory(id_user)
-     return history;
+    
+     const history = await historyRepository.getUserHistory(id_user);
+     return history.map(record => {
+       const percentage = Math.round((record.last_position / record.duration) * 100);
+       
+       return {
+         ...record,
+         percentage_watched: `${percentage}%` 
+       };
+     });
   }
-
 }
 
 export default new HistoryService();
