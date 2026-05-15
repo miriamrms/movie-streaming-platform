@@ -19,3 +19,15 @@ model Movie {
   cast      String?
   createdAt DateTime @default(now())
 }
+
+model History {
+  id_user       String
+  id_movie      String
+  watched_at    DateTime @db.Date
+  duration      Int
+  last_position Int      @default(0)
+  is_completed  Boolean  @default(false)
+  is_hidden     Boolean  @default(false)
+
+  @@id([id_user, id_movie, watched_at])
+}
