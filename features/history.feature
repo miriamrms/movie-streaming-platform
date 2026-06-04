@@ -1,7 +1,52 @@
 Feature: Histórico de Conteúdos Assistidos
     As a usuário do sistema
-    I want to acessar uma página que liste, em ordem cronológica inversa, todos os vídeos que assisti anteriormente, exibindo a data e a % assistida
+    I want to acessar uma página que liste, em ordem cronológica inversa, todos os vídeos que assisti anteriormente, exibindo a data e a porcentagem assistida
     So that eu possa ter um registro organizado do meu consumo e encontrar facilmente conteúdos para rever ou recomendar.
+
+# Cenários de Serviços
+
+Scenario: Registrar novo filme no histórico
+    Given que o usuário está logado
+    And o sistema não possui nenhum registro de histórico para o filme "Cidadão Kane" no dia "26/04/2026"
+    When eu envio uma requisição para salvar o progresso do filme "Cidadão Kane" com tempo assistido de "120" minutos e duração de "120" minutos no dia "26/04/2026"
+    Then deve existir um novo registro para o filme "Cidadão Kane" no dia "26/04/2026"
+    And ele deve ter o tempo assistido de "120" minutos e duração de "120" minutos
+
+Scenario: Atualizar progresso de filme reassistido no mesmo dia
+    Given que o usuário está logado 
+    And o sistema possui um registro de histórico para o filme "Casablanca" no dia "25/04/2026" com tempo assistido de "20" minutos
+    When eu envio uma requisição para salvar o progresso do filme "Casablanca" com tempo assistido de "80" minutos no dia "25/04/2026"
+    Then deve existir apenas um registro para o filme "Casablanca" no dia "25/04/2026"
+    And deve ter o tempo assistido atualizado de "80" minutos
+
+Scenario: Registrar múltiplas visualizações do mesmo filme em dias diferentes
+    Given que o usuário está logado
+    And o sistema possui um registro de histórico para o filme "Casablanca" no dia "25/04/2026" com tempo assistido de "100" minutos
+    When eu envio uma requisição para salvar o progresso do filme "Casablanca" com tempo assistido de "50" minutos no dia "26/04/2026"
+    Then deve existir um novo registro para o filme "Casablanca" no dia "26/04/2026" com tempo assistido de "50" minutos
+    And o registro do filme "Casablanca" no dia "25/04/2026" deve permanecer com o tempo assistido de "100" minutos
+
+Scenario: Ocultar um registro específico do histórico
+    Given que o usuário está logado
+    And o sistema possui um registro de histórico para o filme "Casablanca" no dia "20/04/2026"
+    When eu solicito esconder o registro do filme "Casablanca" do dia "20/04/2026"
+    Then o registro do filme "Casablanca" no dia "20/04/2026" passa a constar internamente como oculto no sistema
+
+Scenario: Ocultar todo o histórico quando existem registros
+    Given que o usuário está logado
+    And o sistema possui um registro de histórico para o filme "Casablanca" no dia "20/04/2026"
+    And o sistema possui um registro de histórico para o filme "Tempos Modernos" no dia "25/04/2026"
+    When eu solicito esconder todo o histórico do usuário
+    Then os registros de "Casablanca" e "Tempos Modernos" passam a constar internamente como ocultos no sistema
+
+Scenario: Ocultar todo o histórico quando não existem registros 
+    Given que o usuário está logado
+    And o histórico do usuário está completamente vazio no sistema
+    When eu solicito esconder todo o histórico do usuário
+    Then o servidor retorna uma resposta de erro notificando que a operação é inválida
+    And o histórico do usuário permanece completamente vazio no sistema
+
+#Cenários GUI
 
 Scenario: Visualizar Histórico Completo
     Given que o usuário está logado
