@@ -6,7 +6,7 @@ module.exports = {
     format: ['summary', 'progress-bar'],
     publishQuiet: true
   },
-  // O seu perfil personalizado aqui:
+  
   lessl: {
     paths: [
       '../features/MovieMetadata.feature', 
@@ -47,6 +47,14 @@ module.exports = {
   movies: {
     paths: ['../features/moviesmanagement.feature'],
     require: ['tests/step_definitions/moviesmanagement-service.steps.ts'],
+    requireModule: ['ts-node/register'],
+    format: ['summary', 'progress-bar'],
+    publishQuiet: true
+  },
+
+  history: {
+    paths: ['../features/history.feature'],
+    require: ['tests/step_definitions/history.steps.ts'], 
     requireModule: ['ts-node/register'],
     format: ['summary', 'progress-bar'],
     publishQuiet: true
