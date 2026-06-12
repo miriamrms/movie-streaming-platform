@@ -116,6 +116,7 @@ export function HistoryPage({ userId, onGoToHome, onGoToPlaylists, onGoToHistory
             <button 
               type="button" 
               className="btn-hide-all-dark"
+              data-testid="btn-hide-all"
               onClick={handleHideAll}
             >
               Ocultar tudo
@@ -124,18 +125,19 @@ export function HistoryPage({ userId, onGoToHome, onGoToPlaylists, onGoToHistory
         </section>
 
         {isLoading ? (
-          <div className="history-empty-box">Carregando histórico...</div>
+          <div className="history-empty-box" data-testid="history-loading">Carregando histórico...</div>
         ) : historyList.length > 0 ? (
           /* Lista com scroll caso fique muito grande */
-          <div className="history-scroll-container">
+          <div className="history-scroll-container" data-testid="history-list-container">
             <div className="history-list-dark">
               {historyList.map((item) => (
-                <div key={item.id} className="history-item-row">
-                  <span className="history-date">{item.date}</span>
-                  <span className="history-title">{item.title}</span>
+                <div key={item.id} className="history-item-row" data-testid="history-item">
+                  <span className="history-date" data-testid="history-item-date">{item.date}</span>
+                  <span className="history-title" data-testid="history-item-title">{item.title}</span>
                   <button 
                     type="button" 
                     className="btn-hide-item-dark"
+                    data-testid="btn-hide-item"
                     title="Esconder do histórico"
                     onClick={() => handleHideItem(item)}
                   >
@@ -151,7 +153,7 @@ export function HistoryPage({ userId, onGoToHome, onGoToPlaylists, onGoToHistory
           </div>
         ) : (
           /* Caixa pontilhada original mantendo o seu estilo */
-          <div className="history-empty-box">
+          <div className="history-empty-box" data-testid="history-empty">
             Nenhum filme assistido recentemente.
           </div>
         )}
